@@ -28,12 +28,15 @@
 		});
 		return unsubscribe;
 	});
+
+	//TODO: add the default prayers list
 </script>
 <main>
-<h1>Welcome to Prayer Tracker, <AccountPopup/></h1>
+<h1>Welcome to Amalio, <AccountPopup/></h1>
 
 {@render children()}
 </main>
 <footer>
 	<Footer/>
 </footer>
+

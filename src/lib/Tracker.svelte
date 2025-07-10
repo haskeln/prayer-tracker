@@ -1,6 +1,6 @@
 <script>
   import { writable } from 'svelte/store';
-  import { writePrayer } from './firebase';
+  import { app, writePrayer } from './firebase';
   import { getContext } from 'svelte';
 
   // Salah status: 'jamaah' | 'munfarid' | 'missed'
@@ -15,14 +15,13 @@
     }
   }));
 
-  export let prayers = writable(initialState);
   const appState = getContext('_app');
 </script>
 
 <main class="min-h-screen bg-[#1e1e2f] text-gray-100 p-4">
   <h1 class="text-2xl font-bold mb-4 text-center">🕌 Daily Salah Tracker</h1>
 
-  {#each $prayers as prayer, i (prayer.name)}
+  {#each appState.prayers as prayer, i (prayer.name)}
     <div class="bg-[#2a2a40] rounded-xl p-4 mb-4 shadow-md">
       <h2 class="text-xl font-semibold mb-2">{prayer.name}</h2>
 
@@ -30,21 +29,30 @@
         <button
           class:selected={prayer.status === 'jamaah'}
           class="flex-1 py-1 px-2 rounded-md border border-gray-500 hover:bg-green-600 transition"
-          onclick={() => prayers.update(p => { p[i].status = 'jamaah'; return [...p]; })}
+          onclick={() => {
+            appState.prayers[i].status = 'jamaah';
+            appState.prayers = [...appState.prayers]; // Trigger reactivity
+          }}
         >
           🌙 Jamaah
         </button>
         <button
           class:selected={prayer.status === 'munfarid'}
           class="flex-1 py-1 px-2 rounded-md border border-gray-500 hover:bg-yellow-600 transition"
-          onclick={() => prayers.update(p => { p[i].status = 'munfarid'; return [...p]; })}
+          onclick={() => {
+            appState.prayers[i].status = 'munfarid';
+            appState.prayers = [...appState.prayers]; // Trigger reactivity
+          }}
         >
           🙋 Munfarid
         </button>
         <button
           class:selected={prayer.status === 'missed'}
           class="flex-1 py-1 px-2 rounded-md border border-gray-500 hover:bg-red-600 transition"
-          onclick={() => prayers.update(p => { p[i].status = 'missed'; return [...p]; })}
+          onclick={() => {
+            appState.prayers[i].status = 'missed';
+            appState.prayers = [...appState.prayers]; // Trigger reactivity
+          }}
         >
           ❌ Missed
         </button>
@@ -72,7 +80,7 @@
       </div>
     </div>
   {/each}
-  <button onclick={() => {writePrayer(appState.user.uid, $prayers)}}>Save</button>
+  <button onclick={() => {writePrayer(appState.user.uid, appState.prayers)}}>Save</button>
 </main>
 
 <style>
