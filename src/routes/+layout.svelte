@@ -26,7 +26,14 @@
 		if (!browser) return;
 		await tick();
 		const unsubscribe = onAuthStateChanged(auth, async(firebaseUser) => {
-			appState.user = firebaseUser;
+			appState.prayerTimes = await getPrayerTimes()
+			if(auth.currentUser === null) {
+				appState.user = null;
+				appState.prayers = [];
+				return;
+			}
+			else{
+				appState.user = firebaseUser;
 			setDBListener(firebaseUser.uid, (prayers) => {
 				if (prayers.length > 0) {
 					appState.prayers = prayers;
@@ -38,7 +45,7 @@
 					{name: 'Isha', status: '', rawatib: { qabliyah: false, baadiyah: false }}];
 				}
 			});
-			appState.prayerTimes = await getPrayerTimes()
+			}
 		});
 		return unsubscribe;
 	});

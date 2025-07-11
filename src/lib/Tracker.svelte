@@ -2,6 +2,8 @@
   import { writable } from 'svelte/store';
   import { app, writePrayer } from './firebase';
   import { getContext } from 'svelte';
+  import { Dialog } from 'bits-ui';
+  import {fade, fly} from 'svelte/transition';
 
   // Salah status: 'jamaah' | 'munfarid' | 'missed'
   const salahList = ['Fajr', 'Dhuhr', 'Asr', 'Maghrib', 'Isha'];
@@ -15,14 +17,30 @@
     }
   }));
 
-  const appState = getContext('_app');
+    let time = new Date().toLocaleString();
+    function updateClock() {
+        const now = new Date();
+        time = now.toLocaleString();
+    }
+    setInterval(updateClock, 1000);
+    const appState = getContext('_app');
+    updateClock();
 </script>
 
 <main class="min-h-screen bg-[#1e1e2f] text-gray-100 p-4">
   <h1 class="text-2xl font-bold mb-4 text-center">🕌 Salah Tracker</h1>
+  <div class="text-2xl font-bold text-center">{time.split(',')[0]}</div>
+  <div class="text-4xl font-bold mb-4 text-center"><a>{time.split(',')[1]}</a></div>
 
-  {#each appState.prayers as prayer, i (prayer.name)}
-    <div class="bg-[#2a2a40] rounded-xl p-4 mb-4 shadow-md">
+  {#if !appState.user}
+    {#each Object.keys(appState.prayerTimes) as prayer, i (prayer)}
+        <div in:fly={{y:200, duration:500 + i * 500}} out:fade class="bg-[#2a2a40] rounded-xl p-4 mb-4 shadow-md">
+        <h2 class="text-xl font-semibold mb-2">{prayer} <a>{appState.prayerTimes[prayer]}</a></h2>
+        </div>
+    {/each}
+  {:else}
+    {#each appState.prayers as prayer, i (prayer.name)}
+    <div in:fly={{y:200, duration:500 + i * 500}} out:fade class="bg-[#2a2a40] rounded-xl p-4 mb-4 shadow-md">
       <h2 class="text-xl font-semibold mb-2">{prayer.name} <a>{appState.prayerTimes[prayer.name]}</a></h2>
 
       <div class="flex gap-2 mb-3">
@@ -80,7 +98,13 @@
       </div>
     </div>
   {/each}
-  <button onclick={() => {writePrayer(appState.user.uid, appState.prayers)}}>Save</button>
+  {/if}
+  {#if appState.user}
+  <button transition:fade={{duration: 1000}} onclick={async () => {
+        await writePrayer(appState.user.uid, appState.prayers)
+        alert("Prayers saved successfully!");
+    }}>Save</button>
+    {/if}
 </main>
 
 <style>

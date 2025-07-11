@@ -49,10 +49,19 @@ function handleLogin() {
 		});
 	}
 
+function handleLogout() {
+    if(!confirm("Are you sure you want to log out?")) return;
+    auth.signOut().then(() => {
+        console.log("User signed out.");
+    }).catch((error) => {
+        console.error("Sign out error:", error);
+    });
+}
+
 async function writePrayer(uid, prayers){
     const docref = doc(getFirestore(), `amalio/main/users/${uid}/prayers/${new Date().toISOString().split('T')[0]}`);
     await setDoc(docref, {prayers: prayers}, {merge: true})
     return null;
 }
 
-export { app, auth, writePrayer, handleLogin, setDBListener };
+export { app, auth, writePrayer, handleLogin, setDBListener, handleLogout };
