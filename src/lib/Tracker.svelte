@@ -17,20 +17,11 @@
     }
   }));
 
-    let time = new Date().toLocaleString();
-    function updateClock() {
-        const now = new Date();
-        time = now.toLocaleString();
-    }
-    setInterval(updateClock, 1000);
-    const appState = getContext('_app');
-    updateClock();
+  const appState = getContext('_app');
 </script>
 
 <main class="min-h-screen bg-[#1e1e2f] text-gray-100 p-4">
   <h1 class="text-2xl font-bold mb-4 text-center">🕌 Salah Tracker</h1>
-  <div class="text-2xl font-bold text-center">{time.split(',')[0]}</div>
-  <div class="text-4xl font-bold mb-4 text-center"><a>{time.split(',')[1]}</a></div>
 
   {#if !appState.user}
     {#each Object.keys(appState.prayerTimes) as prayer, i (prayer)}

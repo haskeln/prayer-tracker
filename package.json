@@ -25,6 +25,8 @@
 	},
 	"dependencies": {
 		"bits-ui": "^2.8.10",
-		"firebase": "^11.10.0"
+		"firebase": "^11.10.0",
+		"flowbite": "^3.1.2",
+		"flowbite-svelte": "^1.9.0"
 	}
 }

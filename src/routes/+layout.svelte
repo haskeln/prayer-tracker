@@ -11,6 +11,8 @@
   import AccountPopup from '$lib/AccountPopup.svelte';
   import Footer from '$lib/Footer.svelte';
   import { getPrayerTimes } from '$lib/prayer-times';
+  import Clock from '$lib/Clock.svelte';
+  import Location from '$lib/Location.svelte';
 	let appState = $state({user : null, prayers: [], 
 		prayerTimes: {
 			fajr: '',
@@ -26,7 +28,10 @@
 		if (!browser) return;
 		await tick();
 		const unsubscribe = onAuthStateChanged(auth, async(firebaseUser) => {
-			appState.prayerTimes = await getPrayerTimes()
+			await getPrayerTimes(prayerTimes => {
+				appState.prayerTimes = prayerTimes;
+			});
+			
 			if(auth.currentUser === null) {
 				appState.user = null;
 				appState.prayers = [];
@@ -50,10 +55,11 @@
 		return unsubscribe;
 	});
 
-	//TODO: add the default prayers list
 </script>
 <main>
 <h1>Welcome to Amalio, <AccountPopup/></h1>
+<Clock/>
+<Location/>
 
 {@render children()}
 </main>
