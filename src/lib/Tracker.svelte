@@ -19,11 +19,11 @@
 </script>
 
 <main class="min-h-screen bg-[#1e1e2f] text-gray-100 p-4">
-  <h1 class="text-2xl font-bold mb-4 text-center">🕌 Daily Salah Tracker</h1>
+  <h1 class="text-2xl font-bold mb-4 text-center">🕌 Salah Tracker</h1>
 
   {#each appState.prayers as prayer, i (prayer.name)}
     <div class="bg-[#2a2a40] rounded-xl p-4 mb-4 shadow-md">
-      <h2 class="text-xl font-semibold mb-2">{prayer.name}</h2>
+      <h2 class="text-xl font-semibold mb-2">{prayer.name} <a>{appState.prayerTimes[prayer.name]}</a></h2>
 
       <div class="flex gap-2 mb-3">
         <button

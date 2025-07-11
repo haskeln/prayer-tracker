@@ -4,6 +4,8 @@
     import { handleLogin } from "./firebase";
 
     const appState = getContext('_app');
+
+    //TODO: need to fix the popup background
 </script>
 
 {#if appState.user}

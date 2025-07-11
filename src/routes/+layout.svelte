@@ -10,21 +10,35 @@
 	import { writable } from 'svelte/store';
   import AccountPopup from '$lib/AccountPopup.svelte';
   import Footer from '$lib/Footer.svelte';
-	let appState = $state({user : null});
+  import { getPrayerTimes } from '$lib/prayer-times';
+	let appState = $state({user : null, prayers: [], 
+		prayerTimes: {
+			fajr: '',
+			dhuhr: '',
+			asr: '',
+			maghrib: '',
+			isha: ''
+		}
+	});
 	setContext('_app', appState);
 
 		onMount(async () => {
 		if (!browser) return;
 		await tick();
-		const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
+		const unsubscribe = onAuthStateChanged(auth, async(firebaseUser) => {
 			appState.user = firebaseUser;
-			setDBListener(firebaseUser.uid, prayers => {
+			setDBListener(firebaseUser.uid, (prayers) => {
 				if (prayers.length > 0) {
 					appState.prayers = prayers;
 				} else {
-					appState.prayers = [];
+					appState.prayers = [{name: 'Fajr', status: '', rawatib: { qabliyah: false, baadiyah: false }},
+					{name: 'Dhuhr', status: '', rawatib: { qabliyah: false, baadiyah: false }},
+					{name: 'Asr', status: '', rawatib: { qabliyah: false, baadiyah: false }},
+					{name: 'Maghrib', status: '', rawatib: { qabliyah: false, baadiyah: false }},
+					{name: 'Isha', status: '', rawatib: { qabliyah: false, baadiyah: false }}];
 				}
 			});
+			appState.prayerTimes = await getPrayerTimes()
 		});
 		return unsubscribe;
 	});
