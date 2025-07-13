@@ -18,16 +18,15 @@
 </script>
 
 <div class="text-center">
-  <Button class="top-2 left-4 absolute" onclick={() => (hidden2 = false)}>Menu <AngleRightOutline/></Button>
+  <Button class="top-2 left-4 absolute" onclick={() => (hidden2 = false)}><AngleRightOutline/></Button>
 </div>
 <Drawer bind:hidden={hidden2} class="w-fit bg-gray-50 p-0 dark:bg-gray-800">
   <div class="flex items-center justify-between px-2 pt-4">
     <h5 class="px-4 text-base font-semibold text-gray-500 uppercase dark:text-gray-400">Amalio</h5>
     <CloseButton onclick={() => (hidden2 = true)} class="dark:text-white" />
   </div>
-  <Sidebar class="static">
+  <Sidebar class="relative" alwaysOpen backdrop={false}>
     <SidebarWrapper class="overflow-y-auto rounded-sm px-3 py-4 dark:bg-gray-800">
-      
       <SidebarGroup>
         {#if getAuth().currentUser}
         <SidebarDropdownWrapper label="Amaliyah Tracker">
