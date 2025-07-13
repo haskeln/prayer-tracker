@@ -81,7 +81,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: var(--bg-dark);
+  /* background-color: var(--bg-dark); */
 }
 
 /* Layout helpers */

@@ -4,6 +4,7 @@
   import { getContext } from 'svelte';
   import { Dialog } from 'bits-ui';
   import {fade, fly} from 'svelte/transition';
+  import {Card} from 'flowbite-svelte';
 
   // Salah status: 'jamaah' | 'munfarid' | 'missed'
   const salahList = ['Fajr', 'Dhuhr', 'Asr', 'Maghrib', 'Isha'];
@@ -31,7 +32,8 @@
     {/each}
   {:else}
     {#each appState.prayers as prayer, i (prayer.name)}
-    <div in:fly={{y:200, duration:500 + i * 500}} out:fade class="bg-[#2a2a40] rounded-xl p-4 mb-4 shadow-md">
+    <div in:fly={{y:200, duration:500 + i * 500}} out:fade>
+    <Card class="max-w-3xl mx-auto my-4 p-4 bg-gray-100 dark:bg-gray-800 rounded-3xl shadow-md">
       <h2 class="text-xl font-semibold mb-2">{prayer.name} <a>{appState.prayerTimes[prayer.name]}</a></h2>
       <div class="flex gap-2 mb-3">
         <button
@@ -86,6 +88,7 @@
           </label>
         {/if}
       </div>
+    </Card>
     </div>
   {/each}
   {/if}
