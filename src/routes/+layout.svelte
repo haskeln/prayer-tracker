@@ -25,6 +25,14 @@
 			isha: ''
 		},
 		summaryNDays: 7,
+		quran: {
+			lastGlobalAyah: 0,
+			lastSurah: 1,
+			current: {
+				surah: 1,
+			},
+			last: {surah: 1, ayah: 0},
+		}
 	});
 	setContext('_app', appState);
 

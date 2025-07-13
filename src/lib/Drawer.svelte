@@ -18,7 +18,7 @@
 </script>
 
 <div class="text-center">
-  <Button class="top-2 left-4 absolute" onclick={() => (hidden2 = false)}><AngleRightOutline/></Button>
+  <Button class="top-2 left-4 fixed" onclick={() => (hidden2 = false)}><AngleRightOutline/></Button>
 </div>
 <Drawer bind:hidden={hidden2} class="w-fit bg-gray-50 p-0 dark:bg-gray-800">
   <div class="flex items-center justify-between px-2 pt-4">
