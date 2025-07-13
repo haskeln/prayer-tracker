@@ -22,7 +22,7 @@
 </div>
 <Drawer bind:hidden={hidden2} class="w-fit bg-gray-50 p-0 dark:bg-gray-800">
   <div class="flex items-center justify-between px-2 pt-4">
-    <h5 class="px-4 text-base font-semibold text-gray-500 uppercase dark:text-gray-400">Amalio</h5>
+    <h5 class="px-4 text-base font-semibold text-gray-500 uppercase dark:text-gray-400"><a href="/">Amalio</a></h5>
     <CloseButton onclick={() => (hidden2 = true)} class="dark:text-white" />
   </div>
   <Sidebar class="relative" alwaysOpen backdrop={false}>

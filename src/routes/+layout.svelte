@@ -60,7 +60,7 @@
 	});
 
 </script>
-<main class="w-full max-w-lg">
+<main class="w-full max-w-3xl">
 <Clock/>
 <Location/>
 <Drawer/>
