@@ -20,8 +20,8 @@
   const appState = getContext('_app');
 </script>
 
-<main class="min-h-screen bg-[#1e1e2f] text-gray-100 p-4">
-  <h1 class="text-2xl font-bold mb-4 text-center">🕌 Salah Tracker</h1>
+<!-- <main class="min-h-screen bg-[#1e1e2f] text-gray-100 p-4"> -->
+  <!-- <h1 class="text-2xl font-bold mb-4 text-center">🕌 Salah Tracker</h1> -->
 
   {#if !appState.user}
     {#each Object.keys(appState.prayerTimes) as prayer, i (prayer)}
@@ -33,7 +33,6 @@
     {#each appState.prayers as prayer, i (prayer.name)}
     <div in:fly={{y:200, duration:500 + i * 500}} out:fade class="bg-[#2a2a40] rounded-xl p-4 mb-4 shadow-md">
       <h2 class="text-xl font-semibold mb-2">{prayer.name} <a>{appState.prayerTimes[prayer.name]}</a></h2>
-
       <div class="flex gap-2 mb-3">
         <button
           class:selected={prayer.status === 'jamaah'}
@@ -92,11 +91,11 @@
   {/if}
   {#if appState.user}
   <button transition:fade={{duration: 1000}} onclick={async () => {
-        await writePrayer(appState.user.uid, appState.prayers)
+        await writePrayer(appState.prayers)
         alert("Prayers saved successfully!");
     }}>Save</button>
     {/if}
-</main>
+<!-- </main> -->
 
 <style>
   .selected {
