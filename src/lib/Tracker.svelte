@@ -19,6 +19,16 @@
   }));
 
   const appState = getContext('_app');
+
+  async function changeStatus(index, status) {
+    if(!confirm(`Are you sure you want to mark ${salahList[index]} as ${status}?`)) {
+      return;
+    }
+    appState.prayers[index].status = status;
+    appState.prayers = [...appState.prayers]; // Trigger reactivity
+    await writePrayer(appState.prayers);
+    alert(`${salahList[index]} marked as ${status}`);
+  }
 </script>
 
 <!-- <main class="min-h-screen bg-[#1e1e2f] text-gray-100 p-4"> -->
@@ -33,36 +43,30 @@
   {:else}
     {#each appState.prayers as prayer, i (prayer.name)}
     <div in:fly={{y:200, duration:500 + i * 500}} out:fade>
-    <Card class="max-w-3xl mx-auto my-4 p-4 bg-gray-100 dark:bg-gray-800 rounded-3xl shadow-md">
+    <Card class="max-w-3xl mx-auto my-4 p-4 bg-gray-100 dark:bg-gray-800 rounded-3xl shadow-md {appState.timeLock[prayer.name] ? 'opacity-50 bg-white-100 dark:bg-white-800' : ''}">
       <h2 class="text-xl font-semibold mb-2">{prayer.name} <a>{appState.prayerTimes[prayer.name]}</a></h2>
       <div class="flex gap-2 mb-3">
         <button
           class:selected={prayer.status === 'jamaah'}
           class="flex-1 py-1 px-2 rounded-md border border-gray-500 hover:bg-green-600 transition"
-          onclick={() => {
-            appState.prayers[i].status = 'jamaah';
-            appState.prayers = [...appState.prayers]; // Trigger reactivity
-          }}
+          disabled={appState.timeLock[prayer.name]}
+          onclick={() => changeStatus(i, 'jamaah')}
         >
           🌙 Jamaah
         </button>
         <button
           class:selected={prayer.status === 'munfarid'}
           class="flex-1 py-1 px-2 rounded-md border border-gray-500 hover:bg-yellow-600 transition"
-          onclick={() => {
-            appState.prayers[i].status = 'munfarid';
-            appState.prayers = [...appState.prayers]; // Trigger reactivity
-          }}
+          disabled={appState.timeLock[prayer.name]}
+          onclick={() => changeStatus(i, 'munfarid')}
         >
           🙋 Munfarid
         </button>
         <button
           class:selected={prayer.status === 'missed'}
           class="flex-1 py-1 px-2 rounded-md border border-gray-500 hover:bg-red-600 transition"
-          onclick={() => {
-            appState.prayers[i].status = 'missed';
-            appState.prayers = [...appState.prayers]; // Trigger reactivity
-          }}
+          disabled={appState.timeLock[prayer.name]}
+          onclick={() => changeStatus(i, 'missed')}
         >
           ❌ Missed
         </button>
@@ -74,6 +78,7 @@
             <input
               type="checkbox"
               bind:checked={prayer.rawatib.qabliyah}
+              disabled={appState.timeLock[prayer.name]}
             />
             Qabliyah
           </label>
@@ -83,6 +88,7 @@
             <input
               type="checkbox"
               bind:checked={prayer.rawatib.baadiyah}
+              disabled={appState.timeLock[prayer.name]}
             />
             Ba'diyah
           </label>

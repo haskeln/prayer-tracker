@@ -1,9 +1,17 @@
 <script>
-    	let time = $state(new Date().toLocaleString());
+    import {getContext, onMount} from "svelte";
+  import { isBefore } from "./time-comparer";
+
+    const appState = getContext('_app');
+    let time = $state(new Date().toLocaleString());
     function updateClock() {
         const now = new Date();
         time = now.toLocaleString();
+        Object.keys(appState.timeLock).forEach(key => {
+            if(appState.prayerTimes[key]) appState.timeLock[key] = isBefore(time.split(",")[1], appState.prayerTimes[key]);
+        });
     }
+
     setInterval(updateClock, 1000);
     updateClock();
 </script>

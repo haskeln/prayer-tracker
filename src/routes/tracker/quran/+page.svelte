@@ -17,7 +17,7 @@
 
     $effect(() => {
         if(appState.quran.current.surah != appState.quran.last.surah){
-            appState.quran.last.ayah = -1
+            appState.quran.last.ayah = 0
         }
     })
     async function getQuran(){
@@ -42,9 +42,9 @@
     }
 </script>
 
-<input bind:value={appState.quran.lastSurah} type="number" placeholder="Enter surah number"/>
+<input bind:value={appState.quran.current.surah} type="number" placeholder="Enter surah number"/>
 {#if quranData.length > 0}
-    <Card id="surah-profile" class="max-w-3xl mx-auto my-4 p-4 bg-gray-100 dark:bg-gray-800 rounded-3xl shadow-md">
+    <Card id="surah-profile" class="max-w-3xl mx-auto my-4 p-4 bg-white-100 dark:bg-[#2c2c2c] rounded-3xl shadow-md">
         <h2 class="text-2xl font-bold text-center mb-4">Surah {appState.quran.current.surah} - {quranData[appState.quran.current.surah - 1]?.name}</h2>
         <div class="text-center mb-4">{quranData[appState.quran.current.surah - 1]?.englishName}</div>
         <div class="text-center mb-4">Total Ayahs: {quranData[appState.quran.current.surah - 1]?.ayahs.length}</div>
@@ -71,7 +71,7 @@
         {#if ayah.localNumber <= appState.quran.last.ayah}
             <p class="text-end">{ayah.text}</p>
             {:else}
-            <p class="text-end"><a onclick={() => {
+            <p class="text-end blur-[2px]"><a onclick={() => {
                 appState.quran.last.ayah = ayah.localNumber;
                 appState.quran.lastGlobalAyah = ayah.number
                 appState.quran.last.surah = appState.quran.current.surah;

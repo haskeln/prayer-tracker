@@ -24,6 +24,13 @@
 			maghrib: '',
 			isha: ''
 		},
+		timeLock: {
+			Fajr: false,
+			Dhuhr: false,
+			Asr: false,
+			Maghrib: false,
+			Isha: false
+		},
 		summaryNDays: 7,
 		quran: {
 			lastGlobalAyah: 0,
@@ -32,6 +39,14 @@
 				surah: 1,
 			},
 			last: {surah: 1, ayah: 0},
+		},
+		sunnah: {
+			ishraq: false,
+			tahajjud: false,
+			tahiyyatulMasjid: false,
+			tahiyyatulWudu: false,
+			witr: false,
+			dhuha: false
 		}
 	});
 	setContext('_app', appState);
