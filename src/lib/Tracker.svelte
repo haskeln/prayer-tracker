@@ -98,12 +98,12 @@
     </div>
   {/each}
   {/if}
-  {#if appState.user}
+  <!-- {#if appState.user}
   <button transition:fade={{duration: 1000}} onclick={async () => {
         await writePrayer(appState.prayers)
         alert("Prayers saved successfully!");
     }}>Save</button>
-    {/if}
+    {/if} -->
 <!-- </main> -->
 
 <style>

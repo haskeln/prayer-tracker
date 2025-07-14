@@ -280,5 +280,6 @@ input[type="checkbox"] {
   width: 1.2em;
   height: 1.2em;
   margin-right: var(--spacing-xs);
-  accent-color: #4CAF50;
+  background-color: #2c2c2c;
+  color: #4ade80;
 }

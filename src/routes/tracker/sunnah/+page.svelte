@@ -2,13 +2,20 @@
 import { AccordionItem, Accordion, Card } from "flowbite-svelte";
 import { getContext } from "svelte";
 import { getAuth } from "firebase/auth";
+import { writeSunnah } from "$lib/firebase";
 
 const appState = getContext('_app');
+
 </script>
 <div class="flex flex-row gap-4 flex-wrap items-center justify-center">
        <Card class="mb-4 bg-gray-50 dark:bg-gray-800 p-4 rounded-lg shadow-lg flex flex-col gap-4 md:w-1/2 lg:w-1/3">
             <label>
-            <input type="checkbox" bind:checked={appState.sunnah.ishraq}>
+            <input type="checkbox" bind:checked={appState.sunnah.ishraq} onclick={async () => {
+                confirm("Are you sure you want to toggle Ishraq?")
+                }} onchange={async () => {
+                    await writeSunnah(appState.sunnah);
+                    alert("Ishraq toggled successfully");
+                }}>
             Ishraq
         </label>
         a Sunnah prayer performed after sunrise.
@@ -16,7 +23,12 @@ const appState = getContext('_app');
        </Card>
        <Card class="mb-4 bg-gray-50 dark:bg-gray-800 p-4 rounded-lg shadow-lg flex flex-col gap-4 md:w-1/2 lg:w-1/3">
             <label>
-            <input type="checkbox" bind:checked={appState.sunnah.dhuha}>
+            <input type="checkbox" bind:checked={appState.sunnah.dhuha} onclick={async () => {
+                confirm("Are you sure you want to toggle Dhuha?")
+                }} onchange={async () => {
+                    await writeSunnah(appState.sunnah);
+                    alert("Dhuha toggled successfully");
+                }}>
             Dhuha
         </label>
         a Sunnah prayer performed in the forenoon.
@@ -24,7 +36,12 @@ const appState = getContext('_app');
        </Card>
        <Card class="mb-4 bg-gray-50 dark:bg-gray-800 p-4 rounded-lg shadow-lg flex flex-col gap-4 md:w-1/2 lg:w-1/3">
             <label>
-            <input type="checkbox" bind:checked={appState.sunnah.tahiyyatulMasjid}>
+            <input type="checkbox" bind:checked={appState.sunnah.tahiyyatulMasjid} onclick={async () => {
+                confirm("Are you sure you want to toggle Tahiyyatul Masjid?")
+                }}  onchange={async () => {
+                    await writeSunnah(appState.sunnah);
+                    alert("Tahiyyatul Masjid toggled successfully");
+                }}>
             Tahiyyatul Masjid
         </label>
         a Sunnah prayer performed upon entering the mosque.
@@ -32,7 +49,12 @@ const appState = getContext('_app');
        </Card>
        <Card class="mb-4 bg-gray-50 dark:bg-gray-800 p-4 rounded-lg shadow-lg flex flex-col gap-4 md:w-1/2 lg:w-1/3">
             <label>
-            <input type="checkbox" bind:checked={appState.sunnah.tahiyyatulWudu}>
+            <input type="checkbox" bind:checked={appState.sunnah.tahiyyatulWudu} onclick={async () => {
+                confirm("Are you sure you want to toggle Tahiyyatul Wudu?")
+                }} onchange={async () => {
+                    await writeSunnah(appState.sunnah);
+                    alert("Tahiyyatul Wudu toggled successfully");
+                }}>
             Tahiyyatul Wudu
         </label>
         a Sunnah prayer performed after performing ablution.
@@ -40,7 +62,12 @@ const appState = getContext('_app');
        </Card>
        <Card class="mb-4 bg-gray-50 dark:bg-gray-800 p-4 rounded-lg shadow-lg flex flex-col gap-4 md:w-1/2 lg:w-1/3">
             <label>
-            <input type="checkbox" bind:checked={appState.sunnah.tahajjud}>
+            <input type="checkbox" bind:checked={appState.sunnah.tahajjud}  onclick={async () => {
+                confirm("Are you sure you want to toggle Tahajjud?")
+                }} onchange={async () => {
+                    await writeSunnah(appState.sunnah);
+                    alert("Tahajjud toggled successfully");
+                }}>
             Tahajjud
         </label>
         a Sunnah prayer performed at night.
@@ -48,7 +75,12 @@ const appState = getContext('_app');
        </Card>
        <Card class="mb-4 bg-gray-50 dark:bg-gray-800 p-4 rounded-lg shadow-lg flex flex-col gap-4 md:w-1/2 lg:w-1/3">
             <label>
-            <input type="checkbox" bind:checked={appState.sunnah.witr}>
+            <input type="checkbox" bind:checked={appState.sunnah.witr} onclick={async () => {
+                confirm("Are you sure you want to toggle Witr?")
+                }}  onchange={async () => {
+                    await writeSunnah(appState.sunnah);
+                    alert("Witr toggled successfully");
+                }}>
             Witr
         </label>
         a Sunnah prayer performed after the Isha prayer.

@@ -66,7 +66,7 @@
 			}
 			else{
 				appState.user = firebaseUser;
-				setDBListener((prayers) => {
+				setDBListener((prayers, sunnah) => {
 					if (prayers.length > 0) {
 						appState.prayers = prayers;
 					} else {
@@ -76,6 +76,8 @@
 						{name: 'Maghrib', status: '', rawatib: { qabliyah: false, baadiyah: false }},
 						{name: 'Isha', status: '', rawatib: { qabliyah: false, baadiyah: false }}];
 					}
+
+					appState.sunnah = sunnah
 				});
 			}
 		});

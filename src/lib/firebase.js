@@ -25,10 +25,10 @@ function dbFormattedDate(){
 
 function dbTrackerRoute() {return `amalio/main/users/${auth.currentUser?.uid}/tracker/${dbFormattedDate()}`;}
 
-function setDBListener(callback = ([])=> {}) {
+function setDBListener(callback = ([], {})=> {}) {
     const unsubtracker = onSnapshot(doc(getFirestore(), dbTrackerRoute()), (snapshot) => {
         console.log("Current data: ", snapshot.data());
-        callback(snapshot.data()?.prayers || []);
+        callback(snapshot.data()?.prayers || [], snapshot.data()?.sunnah || {});
     })
     return unsubtracker;
 }
@@ -74,6 +74,12 @@ async function writePrayer(prayers){
     return null;
 }
 
+async function writeSunnah(sunnah){
+    const docref = doc(getFirestore(), dbTrackerRoute());
+    await setDoc(docref, {sunnah: sunnah}, {merge: true})
+    return null;
+}
+
 async function loadSummary(nDays) {
     const db = getFirestore();
     const colRef = collection(db, `amalio/main/users/${auth.currentUser?.uid}/tracker`);
@@ -113,4 +119,4 @@ async function loadSummary(nDays) {
     return {prayerSummary, sunnahSummary, quranSummary}
 }
 
-export { app, auth, writePrayer, handleLogin, setDBListener, handleLogout, loadSummary };
+export { app, auth, writePrayer, handleLogin, setDBListener, handleLogout, loadSummary, writeSunnah };
